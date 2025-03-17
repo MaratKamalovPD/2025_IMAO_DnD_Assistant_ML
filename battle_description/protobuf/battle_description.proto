@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+// python -m grpc_tools.protoc -I ./battle_description/protobuf --python_out=./battle_description/protobuf --grpc_python_out=./battle_description/protobuf ./battle_description/protobuf/battle_description.proto
+
+service DescriptionService {
+    rpc GenerateDescription (DescriptionRequest) returns (DescriptionResponse);
+}
+
+message DescriptionRequest {
+    string first_char_id = 1;
+    string second_char_id = 2;
+}
+
+message DescriptionResponse {
+    string battle_description = 1;
+}
