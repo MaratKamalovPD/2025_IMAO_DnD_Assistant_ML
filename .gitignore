@@ -151,3 +151,5 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 battle_description/secrets.json
+empty_results.txt
+character_ids_batches.json
