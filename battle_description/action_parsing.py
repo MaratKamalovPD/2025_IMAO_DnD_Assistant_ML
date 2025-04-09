@@ -183,4 +183,5 @@ def process_single_batch_from_json(json_file, batch_index):
     process_batch(selected_batch)
 
 if __name__ == "__main__":
-    process_single_batch_from_json('character_ids_batches.json', 0)
+    process_single_batch_from_json('character_ids_batches.json', 23)
+    process_single_batch_from_json('character_ids_batches.json', 24)

@@ -1,0 +1,136 @@
+{
+  "name": {
+    "rus": "Господин пиршества",
+    "eng": "Lord of the Feast"
+  },
+  "size": {
+    "rus": "Большой",
+    "eng": "large",
+    "cell": "2x2 клетки"
+  },
+  "type": {
+    "name": "монстр"
+  },
+  "challengeRating": "15",
+  "experience": 13000,
+  "proficiencyBonus": "5",
+  "alignment": "хаотично-злая",
+  "armorClass": 18,
+  "armors": [
+    {
+      "name": "природный доспех",
+      "type": "armor"
+    }
+  ],
+  "hits": {
+    "average": 228,
+    "formula": "24к10",
+    "sign": " + ",
+    "bonus": 96,
+    "text": "+ 10 за каждый уровень ячейки выше 4-го"
+  },
+  "speed": [
+    {
+      "value": 30
+    }
+  ],
+  "ability": {
+    "str": 18,
+    "dex": 18,
+    "con": 18,
+    "int": 11,
+    "wiz": 18,
+    "cha": 13
+  },
+  "savingThrows": [
+    {
+      "name": "Ловкость",
+      "shortName": "Лов",
+      "value": 9,
+      "additional": " (+БМ)"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Атлетика",
+      "value": 9,
+      "additional": " (+БМ)"
+    }
+  ],
+  "senses": {
+    "passivePerception": "24",
+    "senses": [
+      {
+        "name": "тёмное зрение",
+        "value": 120,
+        "additional": "слеп за пределами этого радиуса"
+      }
+    ]
+  },
+  "languages": [
+    "Бездны"
+  ],
+  "feats": [
+    {
+      "name": "Охотник в ближнем бою",
+      "value": "Описание..."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Мультиатака",
+      "value": "Описание..."
+    }
+  ],
+  "legendary": {
+    "list": [
+      {
+        "name": "Рывок",
+        "value": "Описание..."
+      }
+    ],
+    "count": 0,
+    "description": "Описание..."
+  },
+  "description": "Описание...",
+  "reactions": [
+    {
+      "name": "В укрытие",
+      "value": "Описание..."
+    }
+  ],
+  "armorText": "+ уровень ячейки",
+  "damageImmunities": [
+    "психическая энергия"
+  ],
+  "damageResistances": [
+    "яд"
+  ],
+  "conditionImmunities": [
+    "очарование"
+  ],
+  "bonusActions": [
+    {
+      "name": "Преследование существа",
+      "value": "Описание..."
+    }
+  ],
+  "environment": [
+    "побережье"
+  ],
+  "damageVulnerabilities": [
+    "огонь"
+  ],
+  "lair": {
+    "action": "Описание...",
+    "effect": "Описание...",
+    "description": "Описание..."
+  },
+  "reaction": "Описание...",
+  "mysticalActions": [
+    {
+      "name": "Скоординированное нападение",
+      "value": "Описание..."
+    }
+  ]
+}
