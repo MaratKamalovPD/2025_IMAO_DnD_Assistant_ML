@@ -10,18 +10,6 @@ import os
 # Загрузка переменных окружения
 load_dotenv()
 
-# Установка прокси-глобально для текущего процесса
-os.environ['HTTP_PROXY'] = 'socks5h://127.0.0.1:10808'
-os.environ['HTTPS_PROXY'] = 'socks5h://127.0.0.1:10808'
-
-# Проверка прокси-соединения
-import requests
-try:
-    test_response = requests.get("https://httpbin.org/ip")
-    print("Прокси работает:", test_response.text)
-except Exception as e:
-    print("Ошибка подключения через прокси:", str(e))
-
 # Настройка Gemini
 api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=api_key)
