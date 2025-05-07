@@ -6,6 +6,7 @@ from PIL import Image
 import io
 import json
 import os
+import time
 
 # Загрузка переменных окружения
 load_dotenv()
@@ -74,9 +75,15 @@ def parse_card_from_img():
         image = Image.open(io.BytesIO(image_data)).convert("RGB")
         prompt = create_prompt_for_img_input()
 
-        # Создаём модель (прокси уже глобально задан)
+        # ⏱️ Начало замера
+        start_time = time.time()
+
         model = genai.GenerativeModel(MODEL_ID)
         response = model.generate_content([prompt, image])
+
+        # ⏱️ Конец замера
+        duration = time.time() - start_time
+        print(f"[Gemini] Image parsing took {duration:.2f} seconds")
 
         cleaned_response = response.text.replace("```json", "").replace("```", "").strip()
         result = json.loads(cleaned_response)
@@ -97,8 +104,16 @@ def create_struct_from_desc():
 
     try:
         prompt = create_prompt_for_text_input(data["desc"])
+
+        # ⏱️ Начало замера
+        start_time = time.time()
+
         model = genai.GenerativeModel(MODEL_ID)
         response = model.generate_content(prompt)
+
+        # ⏱️ Конец замера
+        duration = time.time() - start_time
+        print(f"[Gemini] Description generation took {duration:.2f} seconds")
 
         cleaned_response = response.text.replace("```json", "").replace("```", "").strip()
         result = json.loads(cleaned_response)

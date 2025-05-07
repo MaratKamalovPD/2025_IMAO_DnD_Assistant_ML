@@ -1,8 +1,11 @@
 import requests
 
 # URL вашего FastAPI сервера (если запущен локально)
-API_URL_IMG = "http://127.0.0.1:5000/parse_card_from_img/"
-API_URL_TXT = "http://127.0.0.1:5000/create_struct_from_desc/"
+# API_URL_IMG = "http://127.0.0.1:5000/parse_card_from_img/"
+# API_URL_TXT = "http://127.0.0.1:5000/create_struct_from_desc/"
+
+API_URL_IMG = "http://136.243.118.143:5000/parse_card_from_img/"
+API_URL_TXT = "http://136.243.118.143:5000/create_struct_from_desc/"
 
 # Путь к изображению, которое хотите отправить
 IMAGE_PATH = "images/photo_2025-04-07_23-35-39.jpg"  # замените на реальный путь

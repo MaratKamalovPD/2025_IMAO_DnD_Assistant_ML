@@ -153,3 +153,4 @@ cython_debug/
 battle_description/secrets.json
 empty_results.txt
 character_ids_batches.json
+/.idea
