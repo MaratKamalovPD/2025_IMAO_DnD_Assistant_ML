@@ -1,11 +1,22 @@
+import os
 import requests
+from dotenv import load_dotenv
 
 # URL вашего FastAPI сервера (если запущен локально)
 # API_URL_IMG = "http://127.0.0.1:5000/parse_card_from_img/"
 # API_URL_TXT = "http://127.0.0.1:5000/create_struct_from_desc/"
 
-API_URL_IMG = "http://136.243.118.143:5000/parse_card_from_img/"
-API_URL_TXT = "http://136.243.118.143:5000/create_struct_from_desc/"
+# Загрузка переменных окружения
+load_dotenv()
+
+GERMAN_VM_IP = os.getenv("GERMAN_VM_IP")
+GERMAN_VM_PORT = os.getenv("GERMAN_VM_PORT")
+
+
+BASE_API_URL = f"http://{GERMAN_VM_IP}:{GERMAN_VM_PORT}"
+
+API_URL_IMG = f"{BASE_API_URL}/parse_card_from_img/"
+API_URL_TXT = f"{BASE_API_URL}/create_struct_from_desc/"
 
 # Путь к изображению, которое хотите отправить
 IMAGE_PATH = "images/photo_2025-04-07_23-35-39.jpg"  # замените на реальный путь
@@ -54,5 +65,5 @@ def send_description_to_api():
         print(f"Произошла ошибка: {str(e)}")
 
 if __name__ == "__main__":
-    send_image_to_api()
-    #send_description_to_api()
+    #send_image_to_api()
+    send_description_to_api()
