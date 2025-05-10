@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from werkzeug.utils import secure_filename
 import google.generativeai as genai
 from dotenv import load_dotenv
@@ -11,12 +11,20 @@ import time
 # Загрузка переменных окружения
 load_dotenv()
 
+ALLOWED_IP = os.getenv("ALLOWED_IP")
+
 # Настройка Gemini
 api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=api_key)
 MODEL_ID = "gemini-2.0-flash"
 
 app = Flask(__name__)
+
+@app.before_request
+def limit_remote_addr():
+    client_ip = request.headers.get("X-Real-IP", request.remote_addr)
+    if client_ip != ALLOWED_IP:
+        abort(403)
 
 
 def load_example(structure_path="creature_generator/dnd_card_template.json"):
