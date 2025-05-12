@@ -39,7 +39,7 @@
     "dex": 18,
     "con": 18,
     "int": 11,
-    "wiz": 18,
+    "wis": 18,
     "cha": 13
   },
   "savingThrows": [
@@ -126,7 +126,6 @@
     "effect": "Описание...",
     "description": "Описание..."
   },
-  "reaction": "Описание...",
   "mysticalActions": [
     {
       "name": "Скоординированное нападение",
