@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+
+// python -m grpc_tools.protoc -I ./actions_processor_llm/protobuf --python_out=./actions_processor_llm/protobuf --grpc_python_out=./actions_processor_llm/protobuf ./actions_processor_llm/protobuf/actions_processor_llm.proto
+
+// Сообщение, представляющее одно действие
+message Action {
+  string name = 1;   // Название действия, например, "Короткий меч"
+  string value = 2;  // HTML-форматированное описание действия
+}
+
+// Главное сообщение, содержащее список действий
+message ActionList {
+  repeated Action actions = 1;
+}
+
+// Сервис, обрабатывающий действия и возвращающий сгенерированный JSON
+service ActionProcessorService {
+  // RPC метод, принимающий список действий и возвращающий произвольную JSON-структуру
+  rpc ProcessActions (ActionList) returns (google.protobuf.Struct);
+}

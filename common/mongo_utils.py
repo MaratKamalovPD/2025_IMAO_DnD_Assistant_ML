@@ -3,7 +3,11 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from config import MONGO_URI, MONGO_DB, MONGO_COLLECTION
 
-mongo_client = MongoClient(MONGO_URI)
+mongo_client = MongoClient(
+    MONGO_URI,
+    tls=True,
+    tlsAllowInvalidCertificates=True  # или True, если не проверяешь сертификат
+)
 mongo_db = mongo_client[MONGO_DB]
 mongo_collection = mongo_db[MONGO_COLLECTION]
 

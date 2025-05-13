@@ -50,8 +50,9 @@ python3 battle_description_ms/main.py
 python3 battle_description_ms/client.py
 ```
 
-
 ## creature_generator
+
+**ТЕКУЩИЙ КОД НЕ РАБОТАЕТ С MONGO С TLS, нужно это как-то поправить**
 
 http сервис запускаемый на VM вне РФ для походов в API Gemini
 
@@ -147,3 +148,51 @@ tmux attach
 #### web_crawler_1.py
 
 скачивает все url-адреса страниц существ из бестиария с API `ttg.club`, объединяет в один список и сохраняет как `bestiary_data.json`
+
+## actions_processor_llm
+
+```bash
+py -3.10 -m venv venv_open_router
+```
+```bash
+venv_open_router\Scripts\activate 
+```
+```bash
+pip install -r .\actions_processor_llm\requirements.txt
+```
+
+gRPC микросевис для получения действий существа в виде распаршеной структуры
+
+Для работы требуется `secrets.json` с прокси 
+
+### Формат файла `secrets.json`
+
+Файл `secrets.json` используется для хранения API-ключей OpenAI и соответствующих прокси-серверов.
+
+#### Пример содержимого:
+
+```json
+{
+    "api_keys_with_proxies": [
+        {
+            "api_key": "sk-or-v1-xxxxxxxxxxxxxxxxxxxxxxxxx",
+            "proxy": "socks5://username:password@127.0.0.1:5000"
+        },
+        {
+            "api_key": "sk-or-v1-xxxxxxxxxxxxxxxxxxxxxxxxx",
+            "proxy": "socks5://username:password@127.0.0.1:5000"
+        }
+    ]
+}
+```
+### Для запуска
+
+```bash
+python3 battle_description_ms/main.py
+```
+
+### Для локального теста
+
+```bash
+python3 battle_description_ms/client.py
+```
