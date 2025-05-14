@@ -18,14 +18,18 @@ import battle_description_pb2
 import battle_description_pb2_grpc
 
 class DescriptionService(battle_description_pb2_grpc.DescriptionServiceServicer):
+    
+    def __init__(self):
+        super().__init__()  
+        self.generator = openrouter_utils.DnDBattleGenerator()
+    
     def GenerateDescription(self, request, context):
-        print("aboba")
+       
         first_char_id = request.first_char_id
         second_char_id = request.second_char_id
 
-        print("yoyo")
         first_character = mongo_utils.get_character_by_id(first_char_id)
-        print("trolalero la")
+        
         second_character = mongo_utils.get_character_by_id(second_char_id)
 
         if not first_character or not second_character:
@@ -33,7 +37,5 @@ class DescriptionService(battle_description_pb2_grpc.DescriptionServiceServicer)
             context.set_details("Один или оба персонажа не найдены")
             return battle_description_pb2.DescriptionResponse()
         
-        print("bibki")
-
-        battle_description = openrouter_utils.get_dnd_battle_description(first_character, second_character)
+        battle_description = self.generator.get_battle_description(first_character, second_character)
         return battle_description_pb2.DescriptionResponse(battle_description=battle_description)

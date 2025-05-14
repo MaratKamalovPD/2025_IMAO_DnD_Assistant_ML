@@ -12,4 +12,8 @@ with open("secrets.json", "r") as f:
     secrets = json.load(f)
 
 api_keys_with_proxies = secrets["api_keys_with_proxies"]
-llm_models = ["google/gemini-2.0-flash-exp:free", "google/gemini-2.0-flash-lite-preview-02-05:free"]
+llm_models = models = [
+    "deepseek/deepseek-prover-v2:free",
+    "nousresearch/deephermes-3-mistral-24b-preview:free",
+    "qwen/qwen3-0.6b-04-28:free"
+]
