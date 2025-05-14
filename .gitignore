@@ -154,3 +154,5 @@ battle_description/secrets.json
 empty_results.txt
 character_ids_batches.json
 /.idea
+/venv_open_router
+secrets.json

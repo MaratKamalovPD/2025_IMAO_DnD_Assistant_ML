@@ -19,9 +19,10 @@ def parse_action_json_prompt(json_data):
         7. For damage on a failed or successful save, use "on_fail" and "on_success".
         8. Ignore any descriptive text that does not contain numerical values or game mechanics (e.g., flavor text, behavior descriptions).
         9. Make conditions and effects atomic. For example, "схвачена (Сл высвобождения 19)" should be split into:
-        - "condition": "схвачена",
+        - "condition": "схвачен",
         - "escape_dc": 19.
         10. Do not include fields like "description" or "restriction" unless they contain critical game mechanics.
+        11. Use the base (nominative singular) form for all damage types and saving throw attributes. For example, "колющий" instead of "колющего", and "Телосложение" instead of "Телосложения"
 
         Example JSON structure for an attack:
         {{

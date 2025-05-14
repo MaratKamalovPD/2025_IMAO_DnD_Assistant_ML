@@ -1,6 +1,6 @@
 import grpc
 from concurrent import futures
-from services import description_service
+from battle_description_ms.services import description_service
 import os
 import sys
 
