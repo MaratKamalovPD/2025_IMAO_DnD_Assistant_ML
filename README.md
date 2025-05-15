@@ -12,6 +12,20 @@ python3.10 -m venv venv
 source ./venv/bin/activate
 ``` 
 
+или 
+
+```
+python3.10 -m venv venv_open_router
+``` 
+
+```
+source ./venv_open_router/bin/activate
+``` 
+
+```
+pip install -r ./actions_processor_llm/requirements.txt
+```
+
 ## battle_description_ms
 
 gRPC микросевис для получения описания сражений

@@ -28,7 +28,7 @@ def parse_action_json_prompt(json_data):
         {{
         "name": "Укус",
         "type": "melee",
-        "attack_bonus": "+7",
+        "attackBonus": "+7",
         "reach": "10 фт.",
         "target": "одна цель",
         "damage": {{
@@ -37,7 +37,7 @@ def parse_action_json_prompt(json_data):
             "type": "колющий",
             "bonus": 4
         }},
-        "additional_effects": [
+        "additionalEffects": [
             {{
             "damage": {{
                 "dice": "d8",
@@ -69,16 +69,16 @@ def parse_action_json_prompt(json_data):
         "name": "Кислотное дыхание",
         "type": "area",
         "shape": "30-футовая линия, шириной 5 футов",
-        "save_dc": 14,
-        "save_type": "Ловкость",
+        "saveDc": 14,
+        "saveType": "Ловкость",
         "damage": {{
             "dice": "d8",
             "count": 11,
             "type": "кислота",
             "bonus": 0
         }},
-        "on_fail": "полный урон",
-        "on_success": "половина урона"
+        "onFail": "полный урон",
+        "onSuccess": "половина урона"
         }}
 
 
