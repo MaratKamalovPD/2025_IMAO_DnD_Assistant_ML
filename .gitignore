@@ -156,3 +156,6 @@ character_ids_batches.json
 /.idea
 /venv_open_router
 secrets.json
+/venv_bestiary_img
+/images/input_png_images
+/images/output_webp_images
