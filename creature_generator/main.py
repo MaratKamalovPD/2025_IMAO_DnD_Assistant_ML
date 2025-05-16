@@ -11,8 +11,6 @@ import time
 # Загрузка переменных окружения
 load_dotenv()
 
-ALLOWED_IP = os.getenv("ALLOWED_IP")
-
 # Настройка Gemini
 api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=api_key)
@@ -20,11 +18,16 @@ MODEL_ID = "gemini-2.0-flash"
 
 app = Flask(__name__)
 
+API_KEY = os.getenv("API_KEY")
+
+def require_api_key():
+    key = request.headers.get("X-API-Key")
+    if key != API_KEY:
+        abort(401, description="Unauthorized")
+
 @app.before_request
-def limit_remote_addr():
-    client_ip = request.headers.get("X-Real-IP", request.remote_addr)
-    if client_ip != ALLOWED_IP:
-        abort(403)
+def check_auth():
+    require_api_key()
 
 
 def load_example(structure_path="creature_generator/dnd_card_template.json"):
