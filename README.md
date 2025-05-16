@@ -26,6 +26,20 @@ source ./venv_open_router/bin/activate
 pip install -r ./actions_processor_llm/requirements.txt
 ```
 
+или 
+
+```
+python3.10 -m venv venv_bestiary_img
+``` 
+
+```
+source ./venv_bestiary_img/bin/activate
+``` 
+
+```
+pip install -r ./bestiary_images_scripts/requirements.txt
+```
+
 ## battle_description_ms
 
 gRPC микросевис для получения описания сражений
