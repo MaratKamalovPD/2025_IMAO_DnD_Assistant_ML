@@ -5,6 +5,8 @@ import logging
 import os
 import sys
 from google.protobuf import struct_pb2
+from datetime import datetime
+import time
 
 # Получаем абсолютный путь к корневой директории проекта
 project_root = os.path.dirname(os.path.dirname(__file__))
@@ -28,6 +30,8 @@ class ActionProcessorService(pb2_grpc.ActionProcessorServiceServicer):
         self.generator = openrouter_utils.DnDBattleGenerator()
 
     def ProcessActions(self, request: pb2.ActionList, context) -> struct_pb2.Struct:
+        request_time = datetime.now()
+        logger.info("Время получения запроса: %s", request_time.strftime("%Y-%m-%d %H:%M:%S"))
         logger.info("Получен запрос на обработку %d действий", len(request.actions))
 
         if not request.actions:
@@ -35,26 +39,26 @@ class ActionProcessorService(pb2_grpc.ActionProcessorServiceServicer):
             context.set_details("Список действий пуст")
             return struct_pb2.Struct()
 
-        # Преобразуем действия в список словарей
         json_data = [
             {"name": action.name, "value": action.value}
             for action in request.actions
         ]
 
-        # Сгенерировать промпт
         prompt = attack_parsing.parse_action_json_prompt(json_data)
 
-        # Запрос к LLM
+        # Засекаем время до и после LLM-запроса
+        llm_start_time = time.time()
         llm_response = self.generator.get_parsed_action_json(prompt)
+        llm_duration = time.time() - llm_start_time
 
-        # Проверка на пустой ответ
+        logger.info("Ответ от LLM получен за %.3f секунд", llm_duration)
+
         if not llm_response or not llm_response.strip():
             context.set_code(13)  # INTERNAL
             context.set_details("LLM вернул пустой ответ")
             return struct_pb2.Struct()
 
         try:
-            # Предобработка строки: удаление лишнего, обрезка, очистка
             cleaned_response = (
                 llm_response
                     .replace("json", "")
@@ -63,7 +67,6 @@ class ActionProcessorService(pb2_grpc.ActionProcessorServiceServicer):
                     .strip()
             )
 
-            # Попытка парсинга
             parsed_json = json.loads(cleaned_response)
 
         except json.JSONDecodeError as e:
@@ -76,14 +79,11 @@ class ActionProcessorService(pb2_grpc.ActionProcessorServiceServicer):
             context.set_details("LLM вернул пустой JSON-объект")
             return struct_pb2.Struct()
 
-        # Успешный результат: вставляем содержимое в protobuf Struct
         result = struct_pb2.Struct()
 
-        # Если модель вернула список, обернём его в словарь
         if isinstance(parsed_json, list):
             result.update({"parsed_actions": parsed_json})
         else:
             result.update(parsed_json)
 
         return result
-

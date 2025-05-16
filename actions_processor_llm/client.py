@@ -1,4 +1,5 @@
 import grpc
+import ssl
 import os
 import sys
 from google.protobuf.json_format import MessageToDict
@@ -8,16 +9,18 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "protobuf"))
 from actions_processor_llm_pb2 import Action, ActionList
 from actions_processor_llm_pb2_grpc import ActionProcessorServiceStub
 
-
 def run():
-    with grpc.insecure_channel("localhost:50052") as channel:
+    # ❗️ Временно отключаем проверку сертификата (только для теста)
+    credentials = grpc.ssl_channel_credentials()
+
+    # Подключаемся к внешнему gRPC endpoint через HTTPS
+    with grpc.secure_channel("action-parser-llm.encounterium.ru:443", credentials) as channel:
         stub = ActionProcessorServiceStub(channel)
 
-        # Пример списка действий, как в твоем JSON
         actions = [
             Action(
                 name="Короткий меч",
-                value="<p><em>Рукопашная атака оружием:</em> <dice-roller label=\"Атака\" formula=\"к20 + 4\">+4</dice-roller> к попаданию, досягаемость 5 фт., одна цель. <em>Попадание:</em>&nbsp;5&nbsp;(<dice-roller label=\"Урон\" formula=\"1к6 + 2\"/>) колющего урона.</p>"
+                value="<p><em>Рукопашная атака оружием:</em> <dice-roller label=\"Атака\" formula=\"к20 + 4\">+4</dice-roller> к попаданию, досягаемость 5 фт., одна цель. <em>Попадание:</em>&nbsp;5&nbsp;(<dice-roller label=\"Урон\" formula=\"1к6 + 2\"/>) колющего урона.</p>" 
             ),
             Action(
                 name="Ручной арбалет",
