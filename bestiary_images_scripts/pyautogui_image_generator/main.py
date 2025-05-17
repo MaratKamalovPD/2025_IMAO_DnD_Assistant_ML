@@ -24,10 +24,10 @@ row_pointer = {'index': 0}  # Используем словарь, чтобы с
 
 # ===== Вставка текста =====
 def task_paste_text():
-    text_to_paste = "Add a background that matches the lore, habitat, and mood of the Dungeons & Dragons creature shown in the input image..."
+    text_to_paste = "Add a background that matches the lore, habitat, and mood of the Dungeons & Dragons creature shown in the input image. Preserve the creature’s pose, proportions, colors, and key visual features as closely as possible. The background should enhance the narrative and setting of the creature without altering the character's design. Make it look like the creature is naturally part of its world. Keep lighting and shadows consistent with the added environment."
     pyperclip.copy(text_to_paste)
     time.sleep(0.2)
-    pyautogui.hotkey('ctrl', 'v')
+    keyboard.press_and_release('ctrl+v')
     print("[F1] Текст вставлен.")
 
 # ===== Найти следующую неотмеченную строку =====
@@ -63,7 +63,7 @@ def task_paste_image():
         set_image_to_clipboard(image)
 
         # Вставляем через эмуляцию Ctrl+V
-        pyautogui.hotkey('ctrl', 'v')
+        keyboard.press_and_release('ctrl+v')
         print(f"[F2] Вставлено изображение из строки {row_idx + 2} с прозрачностью.")
 
         # Отмечаем строку как обработанную в таблице
@@ -83,6 +83,11 @@ def hotkey_listener():
         if keyboard.is_pressed('ctrl+f2'):
             threading.Thread(target=task_paste_image).start()
             time.sleep(1)
+
+        if keyboard.is_pressed('ctrl') and keyboard.is_pressed('f3'):  # Новая горячая клавиша для получения координат
+            x, y = pyautogui.position()
+            print(f"[F3] Координаты мыши: ({x}, {y})")
+            time.sleep(1)   
 
         if keyboard.is_pressed('ctrl+q'):
             print("Скрипт остановлен пользователем.")
