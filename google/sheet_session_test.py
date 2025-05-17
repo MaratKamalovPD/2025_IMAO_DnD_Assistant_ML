@@ -1,9 +1,12 @@
 from google.sheet_session import SheetSession
-
+import os
+from dotenv import load_dotenv
 
 if __name__ == "__main__":
-    SPREADSHEET_ID = '1IJiRhD5OziG_1IpwHP1VwlDhhZruesxLZgIrVn4ehBg'
-    RANGE = 'CreatureImages!A2:D1887'  # Подставь актуальное имя листа
+    load_dotenv()
+    
+    SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
+    RANGE = 'CreatureImages!A2:D1887'  
 
     sheet = SheetSession(spreadsheet_id=SPREADSHEET_ID, default_range=RANGE)
 

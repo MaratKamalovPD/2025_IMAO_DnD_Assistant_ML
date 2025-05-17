@@ -12,8 +12,10 @@ SERVICE_ACCOUNT_FILE = os.getenv('SERVICE_ACCOUNT_FILE')
 # Права доступа
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
+load_dotenv()
+
 # ID таблицы из твоей ссылки
-SPREADSHEET_ID = '1IJiRhD5OziG_1IpwHP1VwlDhhZruesxLZgIrVn4ehBg'
+SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
 RANGE_NAME = 'CreatureImages!A1:B10'
 
 # Авторизация с использованием Service Account

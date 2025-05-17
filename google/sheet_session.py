@@ -59,7 +59,8 @@ class SheetSession:
 
     def _maybe_flush(self):
         if len(self.buffer) >= self.max_buffer_size or time.time() - self.last_flush > self.flush_interval:
-            self.flush()
+            #self.flush()
+            pass
 
     def flush(self):
         if not self.buffer:
