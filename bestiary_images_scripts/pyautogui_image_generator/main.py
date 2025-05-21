@@ -52,6 +52,124 @@ def random_sleep(base_delay=0.25, mean=0.3, sigma=0.4, max_delay=2.0):
 
     time.sleep(total_delay)
 
+import pyautogui
+import time
+import random
+import threading
+
+# Предполагается, что эти функции и переменная уже существуют в проекте:
+# from your_module import random_offset, random_sleep, stop_requested
+
+def sora_check_click_sequence():
+    try:
+        # 1. Клик по координатам (804, 956)
+        x1, y1 = random_offset(804, 956)
+        pyautogui.click(x=x1, y=y1)
+
+        # 2. Ждём 3 секунды + random_sleep
+        time.sleep(3)
+        random_sleep()
+
+        # 3. Поиск изображения Got_it.bmp
+        print("[F1] Ожидание изображения Got_it")
+        image_found = False
+        start_time = time.time()
+        while time.time() - start_time < 180:
+            try:
+                location = pyautogui.locateOnScreen(
+                    r"bestiary_images_scripts\pyautogui_image_generator\img_templated\Got_it.bmp",
+                    region=(1490, 1356, 1625 - 1490, 1442 - 1356),
+                    confidence=0.9
+                )
+                if location:
+                    print(f"[F1] Изображение найдено по координатам: {location}")
+                    image_found = True
+                    break
+            except Exception as e:
+                print(f"[F1] Ошибка при поиске изображения: {e}")
+
+            if stop_requested.is_set():
+                print("[F2] Остановка по запросу во время ожидания изображения.")
+                return False
+
+            time.sleep(1)
+
+        if not image_found:
+            print("[F1] Ошибка: изображение не найдено в течение 3 минут.")
+            return False
+
+        # Клик по координатам (1556, 1395)
+        x_click, y_click = random_offset(1556, 1395)
+        pyautogui.click(x=x_click, y=y_click)
+
+        # 4. Ждём 10 секунд + random_sleep
+        time.sleep(10)
+        random_sleep()
+
+        # Кликаем по 2 случайным из 4 точек с интервалом 3 секунды
+        points = [
+            (347, 1055),
+            (1167, 1055),
+            (1999, 1100),
+            (2658, 1163)
+        ]
+        selected_points = random.sample(points, 2)
+        for point in selected_points:
+            x_rand, y_rand = random_offset(*point)
+            pyautogui.click(x=x_rand, y=y_rand)
+            time.sleep(3)
+            random_sleep()
+
+        # 5. Ждём 3 секунды + random_sleep
+        time.sleep(3)
+        random_sleep()
+
+        print("[F1] Ожидание изображения Keep_selected_images")
+        image_found = False
+        start_time = time.time()
+        while time.time() - start_time < 180:
+            try:
+                location = pyautogui.locateOnScreen(
+                    r"bestiary_images_scripts\pyautogui_image_generator\img_templated\Keep_selected_images.bmp",
+                    region=(1397, 1884, 1738 - 1397, 1979 - 1884),
+                    confidence=0.9
+                )
+                if location:
+                    print(f"[F1] Финальное изображение найдено: {location}")
+                    image_found = True
+                    break
+            except Exception as e:
+                print(f"[F1] Ошибка при поиске изображения: {e}")
+
+            if stop_requested.is_set():
+                print("[F2] Остановка по запросу во время финального ожидания изображения.")
+                return False
+
+            time.sleep(1)
+
+        if not image_found:
+            print("[F1] Ошибка: финальное изображение не найдено в течение 3 минут.")
+            return False
+
+        # Клик по координатам (1560, 1922)
+        x_final, y_final = random_offset(1560, 1922)
+        pyautogui.click(x=x_final, y=y_final)
+
+        time.sleep(3)
+        random_sleep()
+
+        pyautogui.press('esc')
+
+        time.sleep(3)
+        random_sleep()
+
+        return True
+
+    except Exception as e:
+        print(f"[ERROR] Исключение во время выполнения функции: {e}")
+        return False
+
+
 def is_background_present(region, expected_color=(26, 26, 26), tolerance=3, samples=10):
     screenshot = ImageGrab.grab(bbox=region).convert("RGB")
     width, height = screenshot.size
@@ -107,12 +225,12 @@ def automation_loop():
         extra_text = task_paste_image()
 
         # Ждём 1–2 секунды на подгрузку + немного случайной задержки
-        time.sleep(random.randint(1, 2))
+        time.sleep(random.randint(4, 5))
         random_sleep()
 
         # Вставка текста
         task_paste_text(extra_text)
-        time.sleep(1)
+        time.sleep(2)
         random_sleep()
 
         # ⏳ Ожидание появления изображения (до 3 минут)
@@ -182,6 +300,9 @@ def automation_loop():
             print(f"[F1] Ошибка при отправке изображения на OCR-сервер: {e}")
             break  # Лучше прервать цикл, чем продолжать с недостоверным распознаванием
 
+        time.sleep(3)
+        random_sleep()
+
         # Проверка на ключевые слова
         trigger_words = {"pick", "improve", "images", "best", "help"}
         found_words = []
@@ -194,7 +315,15 @@ def automation_loop():
 
         if found_words:
             print(f"[F1] Обнаружены ключевые слова {found_words} — завершаем цикл.")
-            return
+            sora_check_success = sora_check_click_sequence()
+
+            time.sleep(3)
+            random_sleep()
+
+            if sora_check_success:
+                pass
+            else:
+                return
         else:
             print("[F1] Ничего подозрительного не найдено в OCR. Продолжаем.")
 
