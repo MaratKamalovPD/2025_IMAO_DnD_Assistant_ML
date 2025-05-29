@@ -3,6 +3,8 @@ from werkzeug.utils import secure_filename
 import google.generativeai as genai
 from dotenv import load_dotenv
 from PIL import Image
+from google import genai
+from CreatureCardSchema import CreatureCard
 import io
 import json
 import os
@@ -13,7 +15,8 @@ load_dotenv()
 
 # Настройка Gemini
 api_key = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=api_key)
+#genai.configure(api_key=api_key)
+client = genai.Client(api_key=api_key)
 MODEL_ID = "gemini-2.0-flash"
 
 app = Flask(__name__)
@@ -119,8 +122,13 @@ def create_struct_from_desc():
         # ⏱️ Начало замера
         start_time = time.time()
 
-        model = genai.GenerativeModel(MODEL_ID)
-        response = model.generate_content(prompt)
+        #model = genai.GenerativeModel(MODEL_ID)
+        response = client.models.generate_content(model=MODEL_ID, contents = prompt,
+    config={
+        "response_mime_type": "application/json",
+        "response_schema": list[CreatureCard],
+    },
+    )
 
         # ⏱️ Конец замера
         duration = time.time() - start_time
