@@ -27,6 +27,9 @@ def require_api_key():
 
 @app.before_request
 def check_auth():
+    print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] Incoming request: {request.method} {request.path}")
+    print(f"Headers: {dict(request.headers)}")
+    print(f"Remote addr: {request.remote_addr}")
     require_api_key()
 
 
