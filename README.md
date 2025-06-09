@@ -104,6 +104,12 @@ cd ~/Documents/Xray-linux-64
 tmux
 ``` 
 
+Активируем виртуальное окружение
+
+ ```bash
+source ./venv/bin/activate
+``` 
+
 Запускай Flask:
  ```bash
 python3 creature_generator/main.py

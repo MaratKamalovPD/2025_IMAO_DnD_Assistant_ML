@@ -160,3 +160,7 @@ secrets.json
 /images/input_png_images
 /images/output_webp_images
 
+/images/raw_generated_images
+/images/input_jpeg_maps
+/images/output_webp_maps
+/maps_venv
