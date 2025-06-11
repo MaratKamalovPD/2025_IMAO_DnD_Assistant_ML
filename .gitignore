@@ -164,3 +164,5 @@ secrets.json
 /images/input_jpeg_maps
 /images/output_webp_maps
 /maps_venv
+/ocr_venv
+minio_users.csv
