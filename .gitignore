@@ -161,6 +161,7 @@ secrets.json
 /images/input_png_images
 /images/output_webp_images
 
+bestiary_images_scripts/pyautogui_image_generator/img_templated/shadowHeart.jpg
 /images/raw_generated_images
 /images/input_jpeg_maps
 /images/output_webp_maps
@@ -169,4 +170,3 @@ secrets.json
 minio_users.csv
 minio_users.csv
 creature_images.xlsx
-
