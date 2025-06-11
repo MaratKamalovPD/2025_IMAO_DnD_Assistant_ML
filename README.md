@@ -195,6 +195,10 @@ venv_open_router\Scripts\activate
 pip install -r .\actions_processor_llm\requirements.txt
 ```
 
+```bash
+python3 -m actions_processor_llm.main
+```
+
 gRPC микросевис для получения действий существа в виде распаршеной структуры
 
 Для работы требуется `secrets.json` с прокси 
@@ -230,3 +234,11 @@ python3 battle_description_ms/main.py
 ```bash
 python3 battle_description_ms/client.py
 ```
+
+## ocr_server
+
+```bash
+uvicorn ocr_server:app --host 0.0.0.0 --port 7000
+```
+
+
