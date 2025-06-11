@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 from openpyxl import Workbook
 from openpyxl.worksheet.datavalidation import DataValidation
+from urllib.parse import urlparse
+import os.path
 
 # Загружаем переменные из .env
 load_dotenv()
@@ -23,12 +25,25 @@ collection = db["creatures"]
 # Извлекаем все документы
 documents = collection.find()
 
-# Собираем второй элемент массива images
+# Списки для данных
 url_list = []
+filename_list = []
+
 for doc in documents:
     images = doc.get("images", [])
-    if len(images) >= 2:
-        url_list.append(images[1])
+    
+    # images[1] гарантированно есть
+    url = images[1]
+    url_list.append(url)
+    
+    # images[2] может быть, если есть — вытаскиваем имя файла
+    if len(images) >= 3:
+        parsed_path = urlparse(images[2]).path
+        base = os.path.basename(parsed_path)
+        name, _ = os.path.splitext(base)
+        filename_list.append(name)
+    else:
+        filename_list.append("")  # пустая строка для пустой ячейки
 
 # Создаём Excel-файл
 wb = Workbook()
@@ -36,19 +51,18 @@ ws = wb.active
 ws.title = "Creature Images"
 
 # Заголовки
-ws.append(["✓", "Image URL"])
+ws.append(["✓", "Image URL", "Filename"])
 
 # Добавляем Data Validation для чекбоксов (TRUE/FALSE)
 dv = DataValidation(type="list", formula1='"TRUE,FALSE"', allow_blank=True)
 ws.add_data_validation(dv)
 
 # Заполняем данными
-for i, url in enumerate(url_list, start=2):  # начинаем с 2-й строки
-    cell_check = f"A{i}"
-    cell_url = f"B{i}"
-    ws[cell_check] = "FALSE"
-    ws[cell_url] = url
-    dv.add(ws[cell_check])
+for i, (url, filename) in enumerate(zip(url_list, filename_list), start=2):
+    ws[f"A{i}"] = "FALSE"
+    ws[f"B{i}"] = url
+    ws[f"C{i}"] = filename
+    dv.add(ws[f"A{i}"])
 
 # Сохраняем файл
 output_filename = "creature_images.xlsx"

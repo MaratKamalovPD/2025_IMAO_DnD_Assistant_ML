@@ -157,7 +157,16 @@ character_ids_batches.json
 /venv_open_router
 secrets.json
 /venv_bestiary_img
+/ocr_venv
 /images/input_png_images
 /images/output_webp_images
 
 bestiary_images_scripts/pyautogui_image_generator/img_templated/shadowHeart.jpg
+/images/raw_generated_images
+/images/input_jpeg_maps
+/images/output_webp_maps
+/maps_venv
+/ocr_venv
+minio_users.csv
+minio_users.csv
+creature_images.xlsx

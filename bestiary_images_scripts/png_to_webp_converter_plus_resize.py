@@ -2,7 +2,7 @@ import os
 from PIL import Image
 
 # 📂 Папки для входа и выхода
-INPUT_FOLDER = "images/input_png_images"
+INPUT_FOLDER = "images/raw_generated_images"
 OUTPUT_FOLDER = "images/output_webp_images"
 
 # 📐 Целевой размер для карточек товаров
